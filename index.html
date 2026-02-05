@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Gen Sim OTAN</title>
+  <title>Visualizador SIDC OTAN</title>
 
   <script src="js/milsymbol.js"></script>
 
@@ -36,12 +36,13 @@
     }
 
     .app-window {
-      width: 70vw;
+      width: 80vw;
       min-height: calc(100vh - 40px);
       background: #f5f5f5;
       box-shadow: 0 0 25px rgba(0,0,0,0.4);
       border-radius: 16px;
       position: relative;
+      top: 10px;
       overflow: hidden;      
     }
 
@@ -51,55 +52,35 @@
       border-radius: 6px;
     }
 
-    .app-content {
-      position: absolute;
-      top: 390px;
-      bottom: 0px;
-      width: 100%;
-      overflow-y: auto;
-
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-
-      padding-bottom: 50px;
-    }
-
-
-
     #sidc-viewer {
-      position: fixed;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index:1000;
-      
+      position: flex;  
+      z-index:10;      
       font-family: monospace;
-      font-size: 18px;
+      font-size: 15px;
       background: #222;
       color: #00ffcc;
       padding: 6px 10px;
       border-radius: 6px;
-
-      display: flex;
+      width: fit-content;
+      transform: translateX(220px);
       gap: 6px;
       align-items: center;
     }
 
     #sidc-input {
+      position: flex; 
       background: transparent;
       border: none;
       outline: none;
       color: #00ffcc;
       font-family: monospace;
-      font-size: 18px;
-      width: 320px;
+      font-size: 15px;
+      width: 250px;
     }
    
     .title-main {
       margin-top: -15px;
-      font-size: 40px;
+      font-size: 30px;
       font-weight: bold;
       color: #222;
     }
@@ -111,49 +92,14 @@
     }
    
     .identity-separator {
-      width: 300px;
+      width: 400px;
       height: 2px;
       background: #bbb;
       margin: 0 auto 8px auto;
     }
 
-    /* Etiquetas del titulo del primer bloque */
-    .identity-title {
-      font-size: 20px;
-      color: #444;
-      margin-bottom: 0px;
-    }
-
-
-    /* modifica la sparacion entre label y selector del app-content */  
-    .identity-selectors {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-    }
-
-
-    /* modifica los selectores de la columna derecha */    
-    .identity-selectors select {
-      font-size: 15px;
-      padding: 0px 6px;
-      line-height: 1.2;
-      min-height: 20px;
-    }
-
-    .identity-block {
-      margin-top: 16px;
-      text-align: center;
-    }
-
-    /* Etiquetas del grupo de abajo */
-    .selector-label {
-      font-size: 15px;
-      color: #444;
-      align-self: center;
-    }
     .app-header {
-      position: absolute;
+      position: flex;
       top: 0;
       left: 0;
       width: 100%;
@@ -164,13 +110,12 @@
     }
 
     #symbol-viewer {
-      width: 380px;
-      height: 250px;
+      width: 770px;
+      height: 235px;
       margin: 0 auto; 
       background: #ffffff;
       border-radius: 8px;
       box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
-
       display: flex;
       justify-content: center;
       align-items: center;
@@ -180,7 +125,6 @@
     #resultado {
       width: calc(100% - 50px);
       height: calc(100% - 50px);
-
       display: flex;
       justify-content: center;
       align-items: center;
@@ -190,13 +134,10 @@
     #resultado svg {
       width: 100%;
       height: 100%;
-
       max-width: 100%;
       max-height: 100%;
-
       object-fit: contain;
     }
-
 
     #resultado {
       transition: opacity 0.25s ease, transform 0.25s ease;
@@ -222,38 +163,24 @@
     border-radius: 6px;
     border: 1px solid #888;
     background: #eee;
+    transform: translateX(240px);
   }
 
-  .identity-selectors button:hover {
-    background: #ddd;
-  }
-
-  .fixed-top {
-    position: sticky;
-    top: 110px; 
-    z-index: 9;
-    background-color: #f5f5f5;
-    padding: 20px 0;
-  }
-
-  .three-columns {
+  .two-columns {
     display: grid;
-
     /* (100% - ancho_visualizador) / 2 */
     grid-template-columns:
       calc((100% - 400px) / 2)
       400px
       calc((100% - 400px) / 2);
-
-    gap: 0px;
+    gap: 20px;
     align-items: start;
   }
-
 
   .selector-group {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 20px;
   }
 
   .selector-item {
@@ -261,76 +188,174 @@
     flex-direction: column;
   }
 
-
-  /* Etiquetas del primer grupo de selectores <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
-  .selector-item label {
-    margin-bottom: 5px;
-    font-size: 17px;
-    color: #444;
-  }
-
   .left-column {
-  padding-left: 10px;
-  padding-right: 10px;
-  }
-
-
-  /* modificó el largo del selector(opciones)*/
-  .selector-item select {
-  width: fit-content;
-  min-width: 160px;
-  max-width: 320px;
-  padding: 0px 6px;
-  line-height: 1.2;
-  min-height: 20px;
-  }
-
-  .selector-item {
-    align-items: flex-start;
-  }
-
-  .center-column {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+  padding-left: 15px;
+  padding-right: 15px;
   }
 
   .left-column select {
     font-size: 17px;
   }
 
-  .right-column {
-    padding-left: 10px;
-    padding-right: 10px;
+  .identity-title {
+  font-size: 18px;
+  color: #444;  
   }
 
-  .right-column select {
-    font-size: 17px;       /* tamaño inicial */
-    max-width: 320px;
-    width: fit-content;
+  .left-column, .right-column {  
+    transform: translateY(20px);
+  }
+
+    /* Esto es para las pestañas */
+  .symbol-set {
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .tabs {
+    display: flex;
+    flex-wrap: nowrap;      /* una sola línea */
+    overflow-x: auto;       /* scroll horizontal */
+    gap: 6px;
+    padding: 6px 10px;
     white-space: nowrap;
   }
 
+  /* pestañas con ancho automático */
+  .tab {
+    flex: 0 0 auto;         /* 🔥 ancho según contenido */
+    padding: 6px 12px;
 
-  .identity-title {
-  font-size: 18px;
-  color: #444;
-  margin-bottom: 5px;
+    border: 1px solid #888;
+    background: #eee;
+    border-radius: 6px 6px 0 0;
+    cursor: pointer;
+
+    font-size: 13px;
+    white-space: nowrap;    /* no saltos */
   }
 
-  .right-column .identity-selectors {
-  justify-content: flex-start;
+  /* activa */
+  .tab.active {
+    background: #fff;
+    font-weight: bold;
   }
 
-  .right-column select {
-  margin-left: 0;
+  .tab-content {
+    width: 95%;
+    display: none;
+    background: #fff;
+    padding: 15px;
+    border-radius: 0 8px 8px 8px;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.15);
+    max-width: 1400px;
+    margin: 0 auto;
   }
 
-  .left-column,
-  .right-column {
-    transform: translateY(-10px);
+  .tab-content.active {
+    display: block;
   }
 
+  /* 🖱️ EXPANSIÓN AL PASAR EL CURSOR */
+  .tab:hover {
+    max-width: 320px;            /* se expande */
+    background: #fff;
+    z-index: 10;
+  }
+
+  /* GRID GENERAL */
+  .unidad-tierra-grid {
+    display: grid;
+    grid-template-columns: 1fr 420px 1fr;
+    gap: 20px;
+    margin-top: 20px;
+    align-items: start;
+  }
+
+  /* COLUMNAS */
+  .ut-column {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  /* GRUPOS */
+  .ut-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .ut-group label {
+    font-size: 14px;
+    color: #444;
+  }
+
+  /* CENTRO */
+  .ut-column.center {
+    align-items: center;
+  }
+
+  .center-item {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  /* IMAGEN CENTRAL */
+  .ut-image-box {
+    width: 100%;
+    max-width: 380px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+  }
+
+  .ut-image-box img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  #btn-agregar {
+    font-size: 20px;        /* 🔠 tamaño de la fuente */
+    font-weight: 700;       /* 🅱️ negritas */
+    
+    width: 160px;           /* ↔️ ancho del botón */
+    height: 42px;           /* ↕️ alto del botón */
+
+    background-color: #1e90ff;  /* color de fondo */
+    color: #ffffff;             /* color del texto */
+
+    border: none;
+    border-radius: 6px;     /* esquinas redondeadas */
+    cursor: pointer;
+
+    transition: 
+      background-color 0.2s ease,
+      transform 0.1s ease;
+      
+  }
+
+  #btn-agregar:hover {
+  background-color: #1c7ed6;
+  }
+
+  #btn-agregar:active {
+  transform: scale(0.97);
+  }
+
+  .btn-agregar-wrapper {
+  display: flex;
+  justify-content: center; /* 👈 centra horizontal */
+  margin-top: 10px;        /* opcional */
+  }
+
+  #itcs {
+    text-decoration: underline;
+    transform: translateY(140px); /* negativo = sube */
+  }
 
 
     /* ===============================
@@ -347,15 +372,12 @@
         padding: 0px 0px 200px;
       }
 
-
       /* 🔥 ELIMINAMOS EL GRID DE 3 COLUMNAS */
       .three-columns {
         display: flex;
         flex-direction: column;
         align-items: center;
       }
-
-
 
       #symbol-viewer {
         width: 100%;
@@ -373,13 +395,11 @@
         position: static;
       }
 
-
       select {
         width: 100% !important;
         max-width: 100%;
         font-size: 16px;
       }
-
 
       #sidc-viewer {
         position: fixed;
@@ -409,7 +429,6 @@
         font-size: 12px;
         padding: 0 10px;
       }
-
 
       /* 🔥 CLAVE: selectores en columna */
       .identity-selectors {
@@ -446,8 +465,15 @@
         transform: none;
       }
 
+      @media (max-width: 900px) {
+        .unidad-tierra-grid {
+          grid-template-columns: 1fr;
+        }
 
-
+        .ut-column.center {
+          order: -1;
+        }
+      }
     }
 
   </style>
@@ -461,7 +487,7 @@
     <div class="app-header">
 
       <div class="title-main">
-        Generador de símbolos <br>conforme el estandár MIL-STD-2525D 
+        Generador de símbolos conforme el estandár MIL-STD-2525D 
       </div>
 
       <div class="title-sub">
@@ -470,11 +496,7 @@
 
     </div>
 
-    
-    <!-- ZONA FIJA -->
-    <div class="fixed-top">
-
-      <div class="three-columns">
+      <div class="two-columns">
 
         <!-- IZQUIERDA -->
         <div class="column left-column">
@@ -512,251 +534,615 @@
                   <option value="6">Hostil / Farsante</option>
                 </select>
               </div>
-
             </div>
           </div>
 
-          <!-- Estado -->
-          <div class="identity-block">
-            <div class="identity-separator"></div>
-
-            <div class="identity-title">
-              Estado:
-            </div>
-
-            <div class="selector-item">
-              
-              <select id="status">
-                <option value="" selected disabled hidden>Seleccione…</option>
-                <option value="0">Presente</option>
-                <option value="1">Planificado / Anticipado / Sospechoso</option>
-                <option value="2">Presente / Plenamente funcional</option>
-                <option value="3">Presente / Dañado</option>
-                <option value="4">Presente / Destruido</option>
-                <option value="5">Presente / Al máximo de su capacidad</option>
-              </select>
-            </div>
+          <div class="identity-title" id="itcs">
+            Conjunto de símbolos:
           </div>
 
         </div>
 
-
-        <!-- CENTRO -->
-        <!-- VISUALIZADOR DE SIMBOLOS -->
-        <div class="column center-column">
+        <div class="column right-column">
+          <!-- SIDC FIJO -->
+          <div id="sidc-viewer">
+            SIDC:
+            <input
+              id="sidc-input"
+              type="text"
+              maxlength="30"
+              placeholder="Pegue SIDC y presione Enter"
+            >
+          </div>  
+          
           <div id="symbol-viewer">
             <div id="resultado"></div>
           </div>
+
+          <div class="identity-selectors">
+            <button id="download-svg">Descargar SVG</button>
+            <button id="download-png">Descargar PNG</button>
+          </div>
+
         </div>
 
+      </div>
 
+  <!-- ===============================
+      CONJUNTO DE SÍMBOLOS (TABS)
+  ================================ -->
+  <div class="symbol-set">
 
+    <!-- Pestañas -->
+    <div class="tabs">
+      <button class="tab" data-tab="tab-00">00 Desconocido</button>
+      <button class="tab" data-tab="tab-01">01 Aire</button>
+      <button class="tab" data-tab="tab-02">02 Aire (misil)</button>
+      <button class="tab" data-tab="tab-05">05 Espacio</button>
+      <button class="tab" data-tab="tab-06">06 Espacio (misil)</button>
+      <button class="tab active" data-tab="tab-10">10 Unidad de Tierra</button>
+      <button class="tab" data-tab="tab-11">11 Unidad de Tierra Civil / Organización</button>
+      <button class="tab" data-tab="tab-15">15 Equipo Terrestre</button>
+      <button class="tab" data-tab="tab-20">20 Instalación de Tierra</button>
+      <button class="tab" data-tab="tab-25">25 Medidas de Control</button>
+      <button class="tab" data-tab="tab-30">30 Superficie de mar</button>
+      <button class="tab" data-tab="tab-35">35 Subsuelo de mar</button>
+      <button class="tab" data-tab="tab-36">36 Guerra de minas</button>
+      <button class="tab" data-tab="tab-40">40 Actividades</button>
+      <button class="tab" data-tab="tab-45">45 Atmosférico</button>
+      <button class="tab" data-tab="tab-46">46 Oceanográfico</button>
+      <button class="tab" data-tab="tab-47">47 UEspacio Meteorológico</button>
+      <button class="tab" data-tab="tab-50">50 Inteligencia de señales Espacio</button>
+      <button class="tab" data-tab="tab-51">51 nteligencia de señales Aéreo</button>
+      <button class="tab" data-tab="tab-52">52 Inteligencia de señales Terrestre</button>
+      <button class="tab" data-tab="tab-53">53 Inteligencia de señales Superficie</button>
+      <button class="tab" data-tab="tab-54">54 Inteligencia de señales Subsuelo</button>
+      <button class="tab" data-tab="tab-60">60 Ciberespacio</button>
+    </div>
 
+    <!-- Contenido -->
+    <div class="tab-content" id="tab-00">
+      <p>Íconos, Amplificadores y Modificadores del conjunto <b>Desconocido</b></p>
+    </div>
 
-        <!-- DERECHA -->
-        <div class="column right-column">
-          <!-- BLOQUE: CUARTEL GENERAL / GRUPO DE TRABAJO / MANIQUÍ -->
-          <div class="identity-block">
+    <div class="tab-content" id="tab-01">
+      <p>Íconos, Amplificadores y Modificadores del conjunto <b>Aire</b></p>
+    </div>
 
-            <div class="identity-separator"></div>
+    <div class="tab-content" id="tab-02">
+      <p>Íconos, Amplificadores y Modificadores del conjunto <b>Aire (misil)</b></p>
+    </div>
 
-            <div class="identity-title">
-              Ctel. Gral. / Grupo de trabajo / Dummy:
-            </div>
+    <div class="tab-content" id="tab-05">
+      <p>Íconos, Amplificadores y Modificadores del conjunto <b>Espacio</b></p>
+    </div>
 
-            <div class="identity-selectors">
-              
+    <div class="tab-content" id="tab-06">
+      <p>Íconos, Amplificadores y Modificadores del conjunto <b>Espacio (misil)</b></p>
+    </div>
 
-              <select id="hq">
-                <option value="" selected disabled hidden>Seleccione…</option>
+    <div class="tab-content active" id="tab-10">
+      <p>Íconos, Amplificadores y Modificadores del conjunto <b>Unidad de Tierra</b></p>
+      <div class="unidad-tierra-grid">
 
-                <option value="0">Desconocido</option>
-                <option value="1">Fingido / Simulacro</option>
-                <option value="2">Cuartel General</option>
-                <option value="3">Cuartel General de Finta / Simulacro</option>
-                <option value="4">Grupo Operativo</option>
-                <option value="5">Grupo Operativo de Finta / Simulacro</option>
-                <option value="6">Cuartel General del Grupo Operativo</option>
-                <option value="7">Cuartel General del Grupo Operativo de Finta <br> / Simulacro</option>
-              </select>
-            </div>
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="ut-column left">
+
+          <div class="ut-group">
+            <label>W Grupo de Fecha y Hora<br>(DDhhmmssZMMMAAAA) o O/O "en pedido"</label>
+            <input
+              type="text"
+              id="amp-w"
+              placeholder="30143000ZOCT2007" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label>X Altitud / Profundidad</label>
+            <input
+              type="text"
+              id="amp-x"
+              placeholder="2200 msnm" 
+            />
 
           </div>
+
+          <div class="ut-group">
+            <label>Y Ubicación geograficas o UTM <br>lat(ggmmss.ssN/S)lon(ggmmss.ssW/E)</label>
+            <input
+              type="text"
+              id="amp-y"
+              placeholder="14N2120000N685000W" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label>V Tipo (solo para equipos)</label>
+            <input
+              type="text"
+              id="amp-v"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label>AD Tipo de Plataforma <br>(Inteligencia Electronica o de Comunicaciones)</label>
+            <input
+              type="text"
+              id="amp-ad"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label>AE Tiempo de desmontaje del equipo en minutos</label>
+            <input
+              type="text"
+              id="amp-ae"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label>T Designación Única</label>
+             <input
+              type="text"
+              id="amp-t"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label>Z Velocidad</label>
+            <input
+              type="text"
+              id="amp-z"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group center-item">
+            <label>AO Barra de Compromiso</label>
+            <select id="engagement-bar">
+              <option value="" selected disabled hidden></option>
+            </select>
+          </div>
+
+          <div class="ut-group center-item">
+            <label>AB Indicador de Finta / Ficticio</label>
+            <select id="feint-dummy">
+              <option value="" selected disabled hidden></option>
+            </select>
+          </div>          
+
+          <div class="ut-group center-item">
+            <label>B Escalón de Mando</label>
+            <select id="echelon">
+              <option value="" selected disabled hidden>Seleccione…</option>
+              <option value="00">Desconocido</option>
+              <option value="11">Equipo / Tripulación</option>
+              <option value="12">Escuadrón</option>
+              <option value="13">Sección</option>
+              <option value="14">Pelotón / Destacamento</option>
+              <option value="15">Compañía / Batería / Tropa</option>
+              <option value="16">Batallón / Escuadrón</option>
+              <option value="17">Regimiento / Grupo</option>
+              <option value="18">Brigada</option>
+              <option value="21">División</option>
+              <option value="22">Cuerpo / MEF</option>
+              <option value="23">Ejército</option>
+              <option value="24">Grupo de Ejércitos / Frente</option>
+              <option value="25">Región / Teatro</option>
+              <option value="26">Comando</option>
+            </select>
+
+          </div>      
+
+          <div class="ut-group">
+            <label>C Cantidad</label>
+            <input
+              type="text"
+              id="amp-c"
+              placeholder="Cantidad de artículos presentes" 
+            />
+          </div>
+
+        </div>
+
+        <!-- COLUMNA CENTRAL -->
+        <div class="ut-column center">
+
+          <div class="ut-group center-item">
+            <label>D Indicador de Grupo de Trabajo</label>
+            <select id="task-force">
+              <option value="" selected disabled hidden></option>
+            </select>
+          </div> 
+
+          <div class="ut-group center-item">
+            <label>AC Instalación</label>
+            <select id="installation">
+              <option value="" selected disabled hidden></option>
+            </select>
+          </div> 
+
+          <!-- Modificador 1 -->
+          <div class="ut-group center-item">
+            <label>Modificador 1</label>
+            <select id="modifier-1"></select>
+          </div>
+      
+          <!-- Imagen -->
+          <div class="ut-image-box">
+            <img src="img/unidad de tierra.png" alt="Unidad de Tierra">
+          </div>
+
+          <!-- Icono -->
+          <div class="ut-group center-item">
+            <label>Ícono</label>
+            <select id="icon-selector">
+              <option value="" selected disabled hidden></option>
+              <option value="163400"> ABASTECIMIENTO</option>
+              <option value="201000"> ADMINISTRACIÓN DE SEGURIDAD DEL TRANSPORTE (TSA)</option>
+              <option value="160100"> ADMINISTRATIVO</option>
+              <option value="130302"> ADQUISICIÓN DE OBJETIVOS</option>
+              <option value="160300"> AEROPUERTO DE DESEMBARQUE/AEROPUERTO DE EMBARQUE</option>
+              <option value="200400"> AGENCIA DE CONTROL DE DROGAS (DEA)</option>
+              <option value="164700"> AGUA</option>
+              <option value="121801"> ALA FIJA MISO</option>
+              <option value="150100"> ANÁLISIS</option>
+              <option value="150501"> ANÁLISIS</option>
+              <option value="121101"> ANFIBIO</option>
+              <option value="120300"> ANFIBIOS</option>
+              <option value="120502"> ANFIBIOS</option>
+              <option value="110100"> ANTENAS DE TRANSMISOR DE RADIODIFUSIÓN</option>
+              <option value="110601"> ANTENAS DE TRANSMISOR DE RADIODIFUSIÓN</option>
+              <option value="120400"> ANTITANQUE/ANTIBLOQUE</option>
+              <option value="160600"> APOYO AL SERVICIO DE COMBATE</option>
+              <option value="140200"> APOYO DE COMBATE (MEJORA DE MANIOBRAS)</option>
+              <option value="130500"> APOYO DE FUEGO CONJUNTO</option>
+              <option value="141100"> APOYO GEOESPACIAL/SOPORTE DE INFORMACIÓN GEOESPACIAL</option>
+              <option value="163100"> APOYO RELIGIOSO</option>
+              <option value="121000"> ARMAS COMBINADAS</option>
+              <option value="162300"> ARTILLERÍA</option>
+              <option value="130300"> ARTILLERÍA DE CAMPAÑA</option>
+              <option value="120100"> ASALTO AÉREO CON SUSPENSIÓN ORGÁNICA</option>
+              <option value="110200"> ASUNTOS CIVILES</option>
+              <option value="161600"> ASUNTOS MORTUORIOS/REGISTRO DE TUMBAS</option>
+              <option value="162800"> ASUNTOS PÚBLICOS/INFORMACIÓN PÚBLICA</option>
+              <option value="130301"> AUTOPROPULSADO</option>
+              <option value="130802"> AUTOPROPULSADO CON RUEDAS</option>
+              <option value="120800"> AVIACIÓN ALA FIJA</option>
+              <option value="120600"> AVIACIÓN DEL EJÉRCITO/AVIACIÓN DE ALA GIRATORIA</option>
+              <option value="160500"> BANDA</option>
+              <option value="140104"> BLINDADO DE RECONOCIMIENTO</option>
+              <option value="130801"> BLINDADO/MECANIZADO/CON ORUGAS</option>
+              <option value="121102"> BLINDADO/MECANIZADO/SOBRE ORUGAS</option>
+              <option value="120401"> BLINDADOS</option>
+              <option value="120500"> BLINDADOS/MECANIZADOS/AUTOPROPULSADOS/SOBRE ORUGAS</option>
+              <option value="140400"> BUCEO</option>
+              <option value="150505"> BÚSQUEDA</option>
+              <option value="151100"> BÚSQUEDA</option>
+              <option value="141800"> BÚSQUEDA Y RESCATE</option>
+              <option value="163000"> CABECERA DE FERROCARRIL</option>
+              <option value="150900"> CENTRO DE INTELIGENCIA CONJUNTO</option>
+              <option value="110900"> CENTRO DE RADIOTELETIPO</option>
+              <option value="141600"> COLOCACIÓN DE MINAS</option>
+              <option value="120900"> COMBATE</option>
+              <option value="120700"> COMPUESTO DE AVIACIÓN</option>
+              <option value="140900"> CONSTRUCCIÓN DE CAMPAMENTOS</option>
+              <option value="150200"> CONTRAINTELIGENCIA</option>
+              <option value="110300"> COOPERACIÓN CÍVICO-MILITAR</option>
+              <option value="162700"> CORREO POSTAL</option>
+              <option value="180000"> CUARTEL GENERAL NOMBRADO</option>
+              <option value="180100"> CUERPO DE REACCIÓN RÁPIDA DEL MANDO ALIADO DE EUROPA (ARRC)</option>
+              <option value="130100"> DEFENSA AÉREA</option>
+              <option value="140100"> DEFENSA NUCLEAR QUÍMICA BIOLÓGICA RADIOLÓGICA</option>
+              <option value="200500"> DEPARTAMENTO DE JUSTICIA (DOJ)</option>
+              <option value="140800"> DESACTIVACIÓN DE ARTILLERÍA EXPLOSIVA (EOD)</option>
+              <option value="141400"> DESMINADO DE MINAS</option>
+              <option value="150300"> DIRECCIÓN DE RADIOGRAFÍA</option>
+              <option value="150502"> DIRECCIÓN DE RADIOGRAFÍA</option>
+              <option value="140300"> DIVISIÓN DE INVESTIGACIÓN CRIMINAL</option>
+              <option value="162600"> DUCTO</option>
+              <option value="121803"> EMBARCACIÓN ESPECIAL</option>
+              <option value="110500"> ENLACE</option>
+              <option value="130200"> ENLACE DE FUEGO NAVAL AÉREO/TERRESTRE</option>
+              <option value="140105"> EQUIPADO DE RECONOCIMIENTO</option>
+              <option value="121805"> EQUIPO DE DEMOLICIONES SUBACUÁTICAS</option>
+              <option value="141000"> EXTINCIÓN DE INCENDIOS/PROTECCIÓN CONTRA INCENDIOS</option>
+              <option value="160700"> FINANZAS</option>
+              <option value="121500"> FRANCOTIRADOR</option>
+              <option value="201300"> FUERZA DE SEGURIDAD INTERNA</option>
+              <option value="180300"> FUERZA INTERNACIONAL DE ASISTENCIA PARA LA SEGURIDAD (ISAF)</option>
+              <option value="121800"> FUERZAS DE OPERACIONES ESPECIALES (SOF)</option>
+              <option value="121700"> FUERZAS ESPECIALES</option>
+              <option value="201100"> GUARDIA COSTERA</option>
+              <option value="150500"> GUERRA ELECTRÓNICA</option>
+              <option value="111200"> IMÁGENES DE VIDEO (CÁMARA DE COMBATE)</option>
+              <option value="130000"> INCENDIOS</option>
+              <option value="121100"> INFANTERÍA</option>
+              <option value="140700"> INGENIERÍA</option>
+              <option value="130900"> INSPECCIÓN</option>
+              <option value="162900"> INSPECTOR</option>
+              <option value="161400"> INSTALACIÓN DE TRATAMIENTO MÉDICO</option>
+              <option value="150000"> INTELIGENCIA</option>
+              <option value="150503"> INTERCEPCIÓN</option>
+              <option value="150600"> INTERCEPCIÓN (BÚSQUEDA Y GRABACIÓN)</option>
+              <option value="150504"> INTERFERENCIAS</option>
+              <option value="150800"> INTERFERENCIAS</option>
+              <option value="150700"> INTERROGATORIO</option>
+              <option value="160800"> JUEZ ABOGADO GENERAL</option>
+              <option value="141500"> LANZAMIENTO DE MINAS</option>
+              <option value="161000"> LAVANDERÍA/BAÑO</option>
+              <option value="161100"> MANTENIMIENTO</option>
+              <option value="121400"> MAR, AIRE, TIERRA (SEAL)</option>
+              <option value="121302"> MARINA</option>
+              <option value="161200"> MATERIAL</option>
+              <option value="140101"> MECANIZADO</option>
+              <option value="140701"> MECANIZADO</option>
+              <option value="141701"> MECANIZADO</option>
+              <option value="161300"> MÉDICO</option>
+              <option value="130600"> METEOROLÓGICO</option>
+              <option value="151000"> MILITAR INTELIGENCIA</option>
+              <option value="141300"> MINA</option>
+              <option value="130102"> MISIL</option>
+              <option value="130700"> MISIL</option>
+              <option value="161500"> MORAL,  BIENESTAR Y RECREACIÓN</option>
+              <option value="130800"> MORTERO</option>
+              <option value="121104"> MOTORIZADO</option>
+              <option value="121303"> MOTORIZADO</option>
+              <option value="140102"> MOTORIZADO</option>
+              <option value="140702"> MOTORIZADO</option>
+              <option value="141702"> MOTORIZADO</option>
+              <option value="120402"> MOTORIZADOS</option>
+              <option value="120000"> MOVIMIENTO Y MANIOBRA</option>
+              <option value="180400"> MULTINACIONAL (MN)</option>
+              <option value="160400"> MUNICIONES</option>
+              <option value="170000"> NAVAL</option>
+              <option value="170100"> NAVAL</option>
+              <option value="121200"> OBSERVADOR</option>
+              <option value="130400"> OBSERVADOR DE ARTILLERÍA DE CAMPAÑA</option>
+              <option value="200100"> OFICINA DE ALCOHOL,  TABACO,  ARMAS DE FUEGO Y EXPLOSIVOS (ATF) (DEPARTAMENTO DE JUSTICIA)</option>
+              <option value="163500"> OFICINA DE INFORMACIÓN CONJUNTA (JIB)</option>
+              <option value="200600"> OFICINA FEDERAL DE INVESTIGACIONES (FBI)</option>
+              <option value="190000"> OPERACIÓN DE EMERGENCIA</option>
+              <option value="110600"> OPERACIONES DE APOYO DE INFORMACIÓN MILITAR (MISO)</option>
+              <option value="110400"> OPERACIONES DE INFORMACIÓN</option>
+              <option value="180200"> OPERACIONES DEL MANDO ALIADO</option>
+              <option value="200000"> ORDEN PÚBLICO</option>
+              <option value="142000"> PATRULLA COSTERA</option>
+              <option value="200200"> PATRULLA FRONTERIZA</option>
+              <option value="140600"> PERFORACIÓN</option>
+              <option value="140500"> PERRO</option>
+              <option value="162500"> PETRÓLEO,  ACEITE Y LUBRICANTES</option>
+              <option value="200700"> POLICÍA</option>
+              <option value="141900"> POLICÍA DE SEGURIDAD (AÉREA)</option>
+              <option value="141200"> POLICÍA MILITAR</option>
+              <option value="200800"> PRISIÓN</option>
+              <option value="140000"> PROTECCIÓN</option>
+              <option value="163300"> PUERTO MARÍTIMO DE DESEMBARQUE/PUERTO MARÍTIMO DE EMBARQUE</option>
+              <option value="164800"> PURIFICACIÓN DE AGUA</option>
+              <option value="110700"> RADIO</option>
+              <option value="120601"> RECONOCIMIENTO</option>
+              <option value="120801"> RECONOCIMIENTO</option>
+              <option value="140103"> RECONOCIMIENTO</option>
+              <option value="140703"> RECONOCIMIENTO</option>
+              <option value="121301"> RECONOCIMIENTO Y VIGILANCIA</option>
+              <option value="121300"> RECONOCIMIENTO/CABALLERÍA/EXPLORADOR</option>
+              <option value="120501"> RECONOCIMIENTO/CABALLERÍA/S COUT</option>
+              <option value="110800"> RELÉ DE RADIO</option>
+              <option value="130803"> REMOLCADO</option>
+              <option value="111100"> SATÉLITE TÁCTICO</option>
+              <option value="141700"> SEGURIDAD</option>
+              <option value="151200"> SENSOR</option>
+              <option value="111000"> SEÑAL</option>
+              <option value="200300"> SERVICIO DE ADUANA</option>
+              <option value="201200"> SERVICIO DE ALGUACILES ESTADOUNIDENSES</option>
+              <option value="200900"> SERVICIO SECRETO DE LOS ESTADOS UNIDOS (TREAS) (USSS)</option>
+              <option value="162400"> SERVICIOS DE PERSONAL</option>
+              <option value="120200"> SERVICIOS DE TRÁNSITO AÉREO/OPERACIONES DE AERÓDROMO</option>
+              <option value="121103"> SISTEMA DE CAÑÓN PRINCIPAL</option>
+              <option value="130101"> SISTEMA DE CAÑÓN PRINCIPAL</option>
+              <option value="121900"> SISTEMAS AÉREOS NO TRIPULADOS</option>
+              <option value="160000"> SOSTENIBILIDAD</option>
+              <option value="121804"> SSNR ESPECIAL</option>
+              <option value="163700"> SUMINISTRO DE ESTADOS UNIDOS CLASE I</option>
+              <option value="163800"> SUMINISTRO DE ESTADOS UNIDOS CLASE II</option>
+              <option value="163900"> SUMINISTRO DE ESTADOS UNIDOS CLASE III</option>
+              <option value="164000"> SUMINISTRO DE ESTADOS UNIDOS CLASE IV</option>
+              <option value="164500"> SUMINISTRO DE ESTADOS UNIDOS CLASE IX</option>
+              <option value="164100"> SUMINISTRO DE ESTADOS UNIDOS CLASE V</option>
+              <option value="164200"> SUMINISTRO DE ESTADOS UNIDOS CLASE VI</option>
+              <option value="164300"> SUMINISTRO DE ESTADOS UNIDOS CLASE VII</option>
+              <option value="164400"> SUMINISTRO DE ESTADOS UNIDOS CLASE VIII</option>
+              <option value="164600"> SUMINISTRO DE ESTADOS UNIDOS CLASE X</option>
+              <option value="161800"> SUMINISTRO OTAN CLASE I</option>
+              <option value="161900"> SUMINISTRO OTAN CLASE II</option>
+              <option value="162000"> SUMINISTRO OTAN CLASE III</option>
+              <option value="162100"> SUMINISTRO OTAN CLASE IV</option>
+              <option value="162200"> SUMINISTRO OTAN CLASE V</option>
+              <option value="150400"> TELÉMETRO ELECTRÓNICO</option>
+              <option value="121802"> TIERRA</option>
+              <option value="160200"> TODAS LAS CLASES DE SUMINISTRO</option>
+              <option value="142100"> TOPOGRÁFICA</option>
+              <option value="160900"> TRABAJO</option>
+              <option value="164900"> TRANSMISIÓN</option>
+              <option value="163600"> TRANSPORTE</option>
+              <option value="163200"> UNIDAD DE RETENCIÓN DE REEMPLAZO</option>
+              <option value="161700"> VARIAS CLASES DE SUMINISTRO</option>
+              <option value="121105"> VEHÍCULO DE COMBATE DE INFANTERÍA</option>
+              <option value="121600"> VIGILANCIA</option>
+              <option value="110000">MANDO Y CONTROL</option>
+            </select>
+          </div>
+
+          <!-- Modificador 2 -->
+          <div class="ut-group center-item">
+            <label>Modificador 2</label>
+            <select id="modifier-2"></select>
+          </div>      
+
+          <div class="ut-group center-item">
+            <label>R Movilidad</label>
+            <select id="amp-r">
+              <option value="" selected disabled hidden>Seleccione…</option>
+              <option value="31">Campo a través con ruedas (limitado) (En tierra)</option>
+              <option value="32">Campo a través con ruedas (En tierra)</option>
+              <option value="33">Orugas (En tierra)</option>
+              <option value="34">Combinación de ruedas y orugas (En tierra)</option>
+              <option value="35">Remolcado (En tierra)</option>
+              <option value="36">Carril (En tierra)</option>
+              <option value="37">Animales de carga (En tierra)</option>            
+              <option value="41">Sobre nieve (vehículo motriz)</option>
+              <option value="42">Trineo (En Nieve)</option>  
+              <option value="51">Barcaza (En agua)</option>
+              <option value="52">Anfibio (En agua)</option>
+              <option value="61">Conjunto remolcado naval corto</option>
+              <option value="62">Conjunto remolcado naval largo</option>              
+            </select>
+          </div>  
+
+        </div>
+
+        <!-- COLUMNA DERECHA -->
+        <div class="ut-column right">
+
+          <div class="ut-group center-item">
+            <label>AL Estado Operativo</label>
+            <select id="amp-al">
+              <option value="" selected disabled hidden></option>
+              <option value="0">Presente</option>
+              <option value="1">Planificado / Anticipado / Sospechoso</option>
+              <option value="2">Presente / Plenamente funcional</option>
+              <option value="3">Presente / Dañado</option>
+              <option value="4">Presente / Destruido</option>
+              <option value="5">Presente / Al máximo de su capacidad</option>
+            </select>
+
+          </div>  
+
+          <div class="ut-group">
+            <label>Q Dirección de Movimiento</label>
+            <input
+              type="text"
+              id="amp-q"
+              placeholder="Solo ingresa números entre 0 y 360" 
+            />
+          </div> 
           
-          <!-- BLOQUE: AMPLIFICADORES Y DESCRIPTORES -->
-          <div class="identity-block">
+          <div class="ut-group center-item">
+            <label>S Ubicación de personal del C.G.</label>
+            <select id="amp-s">
+              <option value="" selected disabled hidden></option>
+              <option value="0">Desconocido</option>
+              <option value="1">Fingido / Simulacro</option>
+              <option value="2">Cuartel General</option>
+              <option value="3">Cuartel General de Finta / Simulacro</option>
+              <option value="4">Grupo Operativo</option>
+              <option value="5">Grupo Operativo de Finta / Simulacro</option>
+              <option value="6">Cuartel General del Grupo Operativo</option>
+              <option value="7">Cuartel General del Grupo Operativo de Finta <br> / Simulacro</option>
+            </select>
+          </div>          
 
-            <div class="identity-separator"></div>
+          <div class="ut-group">
+            <label>F Reforzado o Reducido</label>
+            <select id="amp-f"></select>
+          </div>
 
-            <div class="identity-title">
-              Amplificadores y descriptores
-            </div>
+          <div class="ut-group">
+            <label>G Comentarios del Personal</label>
+            <input
+              type="text"
+              id="amp-g"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
 
-            <div class="selector-group">
+          <div class="ut-group">
+            <label>H Información Adicional</label>
+             <input
+              type="text"
+              id="amp-h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
 
-              <div class="selector-item">
-                <label for="echelon">Escalón:</label>
-                <select id="echelon">
-                  <option value="" selected disabled hidden>Seleccione…</option>
+          <div class="ut-group">
+            <label>AF Identificador Común</label>
+            <input
+              type="text"
+              id="amp-af"
+              placeholder="" 
+            />
+         </div>
 
-                  <option value="00">Desconocido</option>
-                  <option value="11">Equipo / Tripulación</option>
-                  <option value="12">Escuadrón</option>
-                  <option value="13">Sección</option>
-                  <option value="14">Pelotón / Destacamento</option>
-                  <option value="15">Compañía / Batería / Tropa</option>
-                  <option value="16">Batallón / Escuadrón</option>
-                  <option value="17">Regimiento / Grupo</option>
-                  <option value="18">Brigada</option>
-                  <option value="21">División</option>
-                  <option value="22">Cuerpo / MEF</option>
-                  <option value="23">Ejército</option>
-                  <option value="24">Grupo de Ejércitos / Frente</option>
-                  <option value="25">Región / Teatro</option>
-                  <option value="26">Comando</option>
-                </select>
-              </div>
+          <div class="ut-group">
+            <label>M Formación Superior</label>
+            <input
+              type="text"
+              id="amp-m"
+              placeholder="" 
+            />
+          </div>
 
-              <div class="selector-item">
-                <label for="mobility">Movilidad del Equipo:</label>
-                <select id="mobility">
-                  <option value="" selected disabled hidden>Seleccione…</option>
-                  <option value="31">Campo a través con ruedas (limitado) (En tierra)</option>
-                  <option value="32">Campo a través con ruedas (En tierra)</option>
-                  <option value="33">Orugas (En tierra)</option>
-                  <option value="34">Combinación de ruedas y orugas (En tierra)</option>
-                  <option value="35">Remolcado (En tierra)</option>
-                  <option value="36">Carril (En tierra)</option>
-                  <option value="37">Animales de carga (En tierra)</option>
-              
-                  <option value="41">Sobre nieve (vehículo motriz)</option>
-                  <option value="42">Trineo (En Nieve)</option>
-                
-                  <option value="51">Barcaza (En agua)</option>
-                  <option value="52">Anfibio (En agua)</option>
+          <div class="ut-group">
+            <label>J Calificación de la Evaluación</label>
+            <select id="amp-j"></select>
 
-                  <option value="61">Conjunto remolcado naval corto</option>
-                  <option value="62">Conjunto remolcado naval largo</option>
-                </select>
-              </div>
-            </div>
+          </div>
+
+          <div class="ut-group">
+            <label>K Eficacia de Combate</label>
+            <select id="amp-k"></select>
+          </div>
+
+          <div class="ut-group">
+            <label>L Firma electrónica detectable</label>
+            <select id="amp-l"></select>
+          </div>
+
+          <div class="ut-group">
+            <label>N Equipo Enemigo</label>
+            <select id="amp-n"></select>
+          </div>
+
+          <div class="ut-group">
+            <label>P Prioridad de visualización</label>
+            <select id="amp-p"></select>
+          </div>
+
+          <div class="btn-agregar-wrapper">
+            <button id="btn-agregar">Agregar</button>
           </div>
 
         </div>
 
       </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-<!-- CONTENIDO SCROLLEABLE -->
-    <div class="app-content">
-      
-      
-
-      
-      
-       
-
-
-    <!-- BLOQUE: CONJUNTO DE SÍMBOLOS -->
-    <div class="identity-block">
-
-      <div class="identity-separator"></div>
-
-      <div class="identity-title">
-        Conjunto de Símbolos:
-      </div>
-
-      <div class="identity-selectors">
-        <span class="selector-label">Descripción:</span>
-
-        <select id="symbol-set">
-          <option value="" selected disabled hidden>Seleccione…</option>
-          <option value="00">Desconocido</option>
-          <option value="01">Aire</option>
-          <option value="02">Aire (misil)</option>
-          <option value="05">Espacio</option>
-          <option value="06">Espacio (misil)</option>
-          <option value="10">Unidad de Tierra</option>
-          <option value="11">Unidad de Tierra Civil / Organización</option>
-          <option value="15">Equipo Terrestre</option>
-          <option value="20">Instalación de Tierra</option>
-          <option value="25">Medidas de Control</option>
-          <option value="30">Superficie de mar</option>
-          <option value="35">Subsuelo de mar</option>
-          <option value="36">Guerra de minas</option>
-          <option value="40">Actividades</option>
-          <option value="45">Atmosférico</option>
-          <option value="46">Oceanográfico</option>
-          <option value="47">Espacio Meteorológico</option>
-          <option value="50">Inteligencia de señales Espacio</option>
-          <option value="51">Inteligencia de señales Aéreo</option>
-          <option value="52">Inteligencia de señales Terrestre</option>
-          <option value="53">Inteligencia de señales Superficie</option>
-          <option value="54">Inteligencia de señales Subsuelo</option>
-          <option value="60">Ciberespacio</option>
-        </select>
-      </div>
 
     </div>
 
+    <div class="tab-content" id="tab-15">
+      <p>Íconos, Amplificadores y Modificadores del conjunto <b>Equipo Terrestre</b></p>
+    </div>
 
+    <div class="tab-content" id="tab-20">
+      <p>Íconos, Amplificadores y Modificadores del conjunto <b>Instalación de Tierra</b></p>
+    </div>
 
+    <div class="tab-content" id="tab-30">
+      <p>Íconos, Amplificadores y Modificadores del conjunto <b>Superficie de mar</b></p>
+    </div>
 
+    <div class="tab-content" id="tab-60">
+      <p>Íconos, Amplificadores y Modificadores del conjunto <b>Ciberespacio</b></p>
+    </div>
 
-
-  
-
-
-      <!-- BLOQUE: DESCARGA DEL SÍMBOLO -->
-      <div class="identity-block">
-
-        <div class="identity-separator"></div>
-
-        <div class="identity-title">
-          Descargar símbolo
-        </div>
-
-        <div class="identity-selectors">
-          <button id="download-svg">Descargar SVG</button>
-          <button id="download-png">Descargar PNG</button>
-        </div>
-
-      </div>
-
-
-
-</div>
-
-
-
-  <!-- SIDC FIJO -->
-  <div id="sidc-viewer">
-    SIDC:
-    <input
-      id="sidc-input"
-      type="text"
-      maxlength="30"
-      placeholder="Pegue SIDC y presione Enter"
-    >
   </div>
 
-</div>
-
   <script src="app.js"></script>
+
 
 </body>
 </html>
